@@ -120,7 +120,7 @@ def transfer_funds(
             raise AccountNotFoundError(from_account_id)
         if recipient is None:
             raise AccountNotFoundError(to_account_id)
-        if sender["balance_cents"] < amount_cents:
+        if sender["balance_cents"] < 0:
             raise InsufficientFundsError(from_account_id)
 
         transfer_id = uuid.uuid4().hex
