@@ -7,6 +7,7 @@ import sqlite3
 from fastapi import Depends, FastAPI, HTTPException, Query, status
 
 from app.database import get_database, initialize_database
+from app.admin import router as admin_router
 from app.models import (
     AccountCreate,
     AccountResponse,
@@ -42,6 +43,7 @@ def create_app(database_path: str | Path | None = None) -> FastAPI:
         version="1.0.0",
     )
     application.state.database_path = str(resolved_database_path)
+    application.include_router(admin_router)
 
     @application.get("/", tags=["System"])
     def root() -> dict[str, str]:
